@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Assistant</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { padding: 10px; margin: 5px; }
+        pre { background: #f4f4f4; padding: 10px; text-align: left; max-width: 600px; margin: auto; }
+    </style>
+    <script>
+        async function sendQuery() {
+            const query = document.getElementById("query").value.trim();  // Ensure it reads user input
+            if (!query) {
+                alert("Please enter a query!");
+                return;
+            }
+
+            const response = await fetch(`/query?query=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            document.getElementById("response").innerText = JSON.stringify(data, null, 2);
+        }
+    </script>
+</head>
+<body>
+    <h2>Chat Assistant</h2>
+    <p>Type your query below (e.g., "Show me all employees in the IT department")</p>
+    <input type="text" id="query" placeholder="Enter your query" size="50" autocomplete="off">
+    <button onclick="sendQuery()">Ask</button>
+    <pre id="response"></pre>
+</body>
+</html>
